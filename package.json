@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "begin": "yarn install && node --loader ts-node scripts/begin.cjs"
+  },
+  "dependencies": {
+    "cli-color": "latest",
+    "ts-node": "latest"
+  }
+}

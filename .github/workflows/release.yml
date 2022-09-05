@@ -1,0 +1,128 @@
+name: RELEASE
+
+on:
+
+  push:
+
+    branches:
+
+      - master
+
+
+
+
+jobs:
+
+  RELEASE:
+
+    runs-on: ${{ matrix.config.os }}
+
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+
+    strategy:
+
+      # We keep a matrix for convenience, but we would typically just run on one
+
+      # single OS and R version, aligned with the target deployment environment
+
+      matrix:
+
+        config:
+
+          - {os: ubuntu-latest, r: 'release'}
+
+
+    env:
+
+      # Access token for GitHub
+
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+      # Preserve package sources for informative references in case of errors
+
+      R_KEEP_PKG_SOURCE: yes
+
+
+
+    if: github.event_name == 'push' && ( github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && (contains(github.event.head_commit.message, 'release-v'))
+
+    steps:
+
+      - name: Checkout repo
+
+        uses: actions/checkout@v2
+
+
+
+
+      # Install
+
+      - uses: borales/actions-yarn@v3.0.0
+
+        with:
+
+          cmd: install
+
+
+
+      # Prepare
+
+      - uses: borales/actions-yarn@v3.0.0
+
+        with:
+
+          cmd: dev:prepare
+
+
+
+      # Publish to NPM
+
+      - uses: borales/actions-yarn@v3.0.0
+
+        with:
+
+          cmd: publish --access=public
+
+          auth-token: ${{ secrets.NPM_AUTH_TOKEN }}
+
+          registry-url: registry.npmjs.org
+
+        env:
+
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      # Creating Release
+
+      - name: Create Release
+
+        if: (!contains(github.event.head_commit.message, 'beta'))
+
+        id: create_release
+
+        uses: actions/create-release@latest
+
+        env:
+
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        with:
+
+          tag_name: ${{ github.event.head_commit.message }}
+
+          release_name: ${{ github.event.head_commit.message }}
+
+          body: |
+
+              ## ${{ github.event.head_commit.message }}
+
+              ### Fixed
+
+
+              ### Added
+
+          draft: true
+
+          prerelease: false
