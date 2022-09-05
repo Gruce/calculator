@@ -11,8 +11,8 @@
   const appManager = useAppManager()
   // App Configuration
   appManager.addApp({
-      "name": "Enab",
-      "title": "تطبيقي الخاص",
+      "name": "SimpleCalculator",
+      "title": "حاسبة بسيطة",
       "minWidth": 400,
       "minHeight": 300,
   })

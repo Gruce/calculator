@@ -1,9 +1,52 @@
 {
+  "name": "module-name",
+  "type": "module",
+  "version": "1.0.0",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/module.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "prepack": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "release": "cd scripts && node --loader ts-node/esm release.ts",
     "begin": "yarn install && node --loader ts-node scripts/begin.cjs"
   },
   "dependencies": {
+    "@nuxt/kit": "npm:@nuxt/kit-edge@latest"
+  },
+  "devDependencies": {
+    "@enab/systemapps": "^1.0.1-beta.3",
+    "@enab/utilities": "^1.0.14-beta.5",
+    "@nuxt/image-edge": "^1.0.0-27703825.db0934c",
+    "@nuxt/module-builder": "latest",
+    "@nuxtjs/color-mode": "^3.1.4",
+    "@nuxtjs/supabase": "^0.1.25",
+    "@pinia/nuxt": "^0.4.1",
+    "@tauri-apps/api": "^1.0.2",
+    "@unocss/inspector": "^0.45.15",
+    "@unocss/nuxt": "^0.45.15",
+    "@unocss/preset-attributify": "^0.45.15",
+    "@unocss/preset-typography": "^0.45.15",
+    "@unocss/preset-web-fonts": "^0.45.15",
+    "@vueuse/core": "^9.1.1",
+    "@vueuse/nuxt": "^9.1.1",
+    "bumpp": "^8.2.1",
+    "nuxt": "npm:nuxt3@latest",
+    "ts-node": "^10.9.1",
     "cli-color": "latest",
-    "ts-node": "latest"
-  }
+    "@enab/core": "latest"
+  },
+  "description": "description",
+  "author": "author-name"
 }
