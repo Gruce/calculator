@@ -1,7 +1,7 @@
 <template>
   <!-- Application -->
   <div p="4">
-    <UiTabGroup  class="bg-[url('https://i.pinimg.com/736x/ee/50/de/ee50dec983d90280a90a40afbe5be29d.jpg')]" :col="false" :tabs="['الحاسبة', 'سجل النتائج', 'عن المبرمج']">
+    <UiTabGroup :col="false" :tabs="['الحاسبة', 'سجل النتائج', 'عن المبرمج']">
         <template #tab-1>
           <SimpleCalculatorAppCalc />
         </template>
